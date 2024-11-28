@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public TextMeshProUGUI currentBulletTxt,totalBulletTxt;
+    public TextMeshProUGUI currentBulletTxt,totalBulletTxt,cycleTimeTxt,totalMoneyTxt;
     void Start()
     {
         
@@ -12,7 +12,9 @@ public class UIManager : MonoBehaviour
     
     void Update()
     {
-        currentBulletTxt.text = Weapon.instance.currentbulletCount + "/" + Weapon.instance.magazineCount;
-        totalBulletTxt.text = Weapon.instance.totalBullet.ToString();
+        currentBulletTxt.text = $"{Weapon.instance.currentBulletCount} / {Weapon.instance.magazineCount}";
+        totalBulletTxt.text = GameManager.instance.totalBullet.ToString();
+        cycleTimeTxt.text = $"{GameManager.instance.hours:00}:{GameManager.instance.minutes:00}";
+        totalMoneyTxt.text=GameManager.instance.money.ToString();
     }
 }

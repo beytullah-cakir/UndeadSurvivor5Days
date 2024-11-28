@@ -6,8 +6,11 @@ TagManager:
   tags:
   - Bullet
   - Enemy
-  - Item
   - BulletItem
+  - EntityLigth
+  - HealthItem
+  - Money
+  - PowerUp
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - UI
   - Enemy
   - Player
-  - 
+  - Ground
   - 
   - 
   - 

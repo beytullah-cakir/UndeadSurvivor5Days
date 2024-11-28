@@ -1,26 +1,30 @@
 using System.Collections;
+using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class Enemy : Entity
 {
 
-    
     private Transform player;
     public float moveDistance, attackDistance;
-    public GameObject item;
     public Vector3 offset;
-
     private float distanceToPlayer;
 
-    
+
 
     void Update()
     {
+        
         distanceToPlayer = Vector2.Distance(transform.position, player.position);
+
         if (distanceToPlayer <= attackDistance)
             Attack();
         else
             MoveTowardsPlayer();
+
+        PowerUp();
         Death();
         currentHealthbar.healthSlider.transform.position = Camera.main.WorldToScreenPoint(transform.position + offset);
     }
@@ -29,10 +33,16 @@ public class Enemy : Entity
     protected override void Start()
     {
         base.Start();
+        Born();
+        player = GameObject.FindWithTag("Player").transform;
+    }
+
+
+    void Born()
+    {
+        health = maxHealth;
         currentHealthbar = transform.GetChild(0).GetComponent<HealthBar>();
         currentHealthbar.SetHealth(health);
-        player = GameObject.FindWithTag("Player").transform;
-
         
     }
 
@@ -41,30 +51,31 @@ public class Enemy : Entity
 
     public void Death()
     {
-        if (health <= 0 && !isDead)
+        if (health <= 0)
         {
-            gameObject.SetActive(false);
-            Invoke(nameof(Respawn),0);
-            Instantiate(item, transform.position, transform.rotation);
-            
-            isDead = true;
+            DownItems();
+            Destroy(gameObject);
+            //Born();
         }
     }
 
-    void Respawn()
+
+    public void DownItems()
     {
-        transform.position = GameManager.instance.RandomPosition();
-        health = maxHealth;
-        isDead=false;
-        currentHealthbar.SetHealth(health);
-        gameObject.SetActive(true);
+        ItemManager items = ItemManager.instance;
+        Instantiate(items.money, transform.position, Quaternion.identity);
+        int isDown = Random.Range(0, 2);
+        if (isDown > 0)
+            Instantiate(items.RandomItems(), transform.position, transform.rotation);
+
     }
+
 
     void Attack()
     {
         if (Time.time >= nextAttackTime)
         {
-            Character.instance.TakeDamage(10);
+            Character.instance.TakeDamage(damage);
             nextAttackTime = Time.time + attackInterval;
         }
 
@@ -72,8 +83,23 @@ public class Enemy : Entity
 
     void MoveTowardsPlayer()
     {
+        transform.localScale = Flip();
         transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
 
+    }
+
+    Vector2 Flip()
+    {
+        return transform.position.x - player.position.x > 0 ? new Vector2(-1, 1) : new Vector2(1, 1);
+    }
+
+    public void PowerUp()
+    {
+        if (GameManager.instance.currentTime >= 18)
+        {
+            speed = upgradeSpeed;
+            damage = upgradeDamage;
+        }
     }
 
 
@@ -89,11 +115,12 @@ public class Enemy : Entity
     {
         if (other.CompareTag("Bullet"))
         {
-            TakeDamage(10);
+            TakeDamage(Character.instance.damage);
+            anm.SetTrigger("Hit");
+            CameraShake.instance.StartShake(1,0.1f);
+            
         }
     }
+   
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-    }
 }

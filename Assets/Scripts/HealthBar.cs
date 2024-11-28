@@ -17,22 +17,9 @@ public class HealthBar : MonoBehaviour
         instance = this;
     }
 
-    void Start()
-    {
-        maxHealth= Character.instance.health;
-        currentHealth = maxHealth;
-        //UpdateHealthBar();
-    }
-
-
-    private void Update()
-    {
-        
-    }
-
     public void SetHealth(float maxHealth)
     {
-        this.maxHealth = maxHealth;
+        this.maxHealth= maxHealth;
         currentHealth = maxHealth;
         UpdateHealthBar(maxHealth);
     }
@@ -42,7 +29,7 @@ public class HealthBar : MonoBehaviour
     {
         currentHealth += amount;
         if (currentHealth > maxHealth) currentHealth = maxHealth;
-        //UpdateHealthBar();
+        
     }
 
     public void UpdateHealthBar(float currentHealth)

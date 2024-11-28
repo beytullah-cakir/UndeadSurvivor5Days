@@ -1,6 +1,8 @@
-using System;
+using NUnit.Framework;
 using System.Collections;
-using Unity.Mathematics;
+using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Diagnostics;
 using UnityEngine.TextCore.Text;
@@ -8,20 +10,18 @@ using UnityEngine.UI;
 
 public class Weapon : MonoBehaviour
 {
-    public int magazineCount;
-    public int currentbulletCount;
-    public int totalBullet;
+
     public bool isReload;
-    public float reloadTime;
+    public float
+        reloadTime,
+        magazineCount,
+        currentBulletCount,
+        upgradeMagazine;
     public Image reloadCircle;
-
-
-
-
-
-
-
+    public GameObject bullet;
+    private Transform firePoint;
     public static Weapon instance;
+    private GameManager _gameManager;
 
     private void Awake()
     {
@@ -32,31 +32,30 @@ public class Weapon : MonoBehaviour
 
     private void Update()
     {
-        if (currentbulletCount <= 0 && BulletIsOver())
+        if ((currentBulletCount <= 0 || (Input.GetKeyDown(KeyCode.R) && currentBulletCount < magazineCount)) && BulletIsOver())
             StartCoroutine(Reload());
         else
             StopAllCoroutines();
 
-       
-        
-        
+
+
+
     }
-
-
-
-
-
 
     private void Start()
     {
-        currentbulletCount= magazineCount;
-        
+        currentBulletCount = magazineCount;
+        firePoint=transform.GetChild(0);
+        _gameManager = GameManager.instance;
     }
 
     public void Fire()
     {
-        currentbulletCount--;
+        GameObject _bullet=Instantiate(bullet,firePoint.position,firePoint.rotation);
+        _bullet.GetComponent<Bullet>().SetTargetPosition(Character.instance.MousePosition());
+        currentBulletCount--;
     }
+
 
 
     IEnumerator Reload()
@@ -71,19 +70,40 @@ public class Weapon : MonoBehaviour
         }
         reloadCircle.fillAmount = 0f;
         isReload = false;
-        totalBullet -= magazineCount;
-        if(totalBullet<=0)
-            totalBullet = 0;
-        currentbulletCount = magazineCount;
+        
+        if (_gameManager.totalBullet > magazineCount)
+        {
+            _gameManager.totalBullet -= magazineCount;
+            currentBulletCount = magazineCount;
+        }
+        else
+        {
+            currentBulletCount = _gameManager.totalBullet;
+            _gameManager.totalBullet = 0f;
+        }
+       
+        
     }
 
 
     public bool BulletIsOver()
     {
-        return totalBullet+currentbulletCount > 0;
+        return _gameManager.totalBullet + currentBulletCount > 0;
     }
 
-   
+
+    
+
+    public void UpgradeMagazine()
+    {
+        magazineCount += upgradeMagazine;
+    }
+
+
+
+
+
+
 
 
 
