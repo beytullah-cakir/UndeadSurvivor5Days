@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioSource weapon, enemyHit, playerHit, gameWin, gameLose, meleeCombat;
+    public AudioSource weapon, enemyHit, playerHit, gameWin, gameLose, meleeCombat,background;
 
 
 
@@ -35,11 +35,13 @@ public class AudioManager : MonoBehaviour
 
     public void GameWinSound()
     {
+        background.volume = 0;
         gameWin.Play();
     }
 
     public void GameLoseSound()
     {
+        background.volume = 0;
         gameLose.Play();
     }
 

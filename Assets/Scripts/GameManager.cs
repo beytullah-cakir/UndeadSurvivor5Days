@@ -2,113 +2,131 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public float zombieCountPerLevel;
-    public GameObject zombie;
     public Transform zombieParent;
-    public Light2D globalLight;
-    private GameObject[] entityLigth;
-    public float gameStartHour;
-    public float gameEndHour;
-    public float gameDurationInSeconds;
-    public int hours, minutes;
+    public int money;
+    public int totalBullet;
+    public int upgradeTotalBullet;
+    public GameObject zombie;
+    private readonly List<GameObject> zombiePool = new List<GameObject>();
+    public bool gameOver;
+    public float countDownTime = 180f;
     public float currentTime;
-    public float money;
-    private Button _quitButton;
-    public float totalBullet;
-    public float upgradeTotalBullet;
-    public List<GameObject> enemys;
 
     public static GameManager instance;
 
     void Start()
     {
-        currentTime = gameStartHour;
+        currentTime = countDownTime;
+        
     }
 
 
-    void ManageLigth(bool open)
-    {
-        entityLigth = GameObject.FindGameObjectsWithTag("EntityLigth");
-        foreach (var entity in entityLigth)
-        {
-            Light2D light = entity.GetComponent<Light2D>();
-            light.enabled = open;
-        }
-    }
-    void AdjustLighting()
-    {
 
-        if (currentTime < 18f)
-        {
-            ManageLigth(false);
-            globalLight.intensity = Mathf.Lerp(1.0f, 0.6f, (currentTime - gameStartHour) / 6f);
-        }
-        else
-        {
-            ManageLigth(true);
-            globalLight.intensity = Mathf.Lerp(0.6f, 0.2f, (currentTime - 18f) / 6f);
-        }
-    }
 
     void Update()
     {
-        float gameTimePerSecond = (gameEndHour - gameStartHour) / gameDurationInSeconds;
-        currentTime += gameTimePerSecond * Time.deltaTime;
+        Timer();
+    }
 
-
-        hours = Mathf.FloorToInt(currentTime);
-        minutes = Mathf.FloorToInt((currentTime - hours) * 60f);
-
-
-        if (currentTime >= gameEndHour)
+    public void Timer()
+    {
+        if (currentTime > 0)
         {
-            Time.timeScale = 0;
+            currentTime -= Time.deltaTime;
         }
-        AdjustLighting();
-
-        if (zombieParent.childCount < zombieCountPerLevel)
-            SpawnZombie();
-
-        
-
+        else
+        {
+            currentTime = 0;
+            gameOver = true;
+            AudioManager.instance.GameWinSound();
+        }
     }
 
 
     void Awake()
     {
         instance = this;
-        for (int i = 0; i < zombieCountPerLevel; i++)
-            SpawnZombie();
+
+        CreateZombies();
     }
 
 
-    public void SpawnZombie()
+    public void CreateZombies()
     {
-        int enemyIndex = Random.Range(0, enemys.Count);
-        GameObject newZombie=Instantiate(enemys[enemyIndex],RandomPosition(),Quaternion.identity);
-        newZombie.transform.parent = zombieParent;
+
+
+        for (int i = 0; i < zombieCountPerLevel; i++)
+        {
+            GameObject new_zombie = Instantiate(zombie, RandomPosition(), Quaternion.identity, zombieParent);
+            zombiePool.Add(new_zombie);
+        }
+
+    }
+
+    
+    public void RespawnZombie(GameObject zombie)
+    {
+        zombie.transform.position = RandomPosition();
     }
 
 
+    //Düþman doðuþ pozisyonunu ayarlamak için yazýldý
     public Vector2 RandomPosition()
     {
         return new Vector2(Random.Range(-24, 14), Random.Range(-20, 6));
     }
 
-
+    //Oyundan çýkmak için yazýldý
     public void QuitGame()
     {
         Application.Quit();
     }
 
+
+    //Toplam mermi sayýsýný arttýrmak için yazýldý
     public void UpgradeTotalBullet()
     {
         totalBullet += upgradeTotalBullet;
+        
     }
+
+
+    //Para yönetimi için yazýldý
+    public void ManageMoney(int value)
+    {
+        money += value;
+        PlayerPrefs.SetInt("MONEY",money);
+    }
+
+
+    //Oyunu durdurunca PauseMenu açýlmasý için yazýldý
+    public void PauseMenu()
+    {
+        Time.timeScale = 0;
+        UIManager.instance.pauseMenu.SetActive(true);
+    }
+
+    //Oyuna devam etmek için yazýldý
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+        UIManager.instance.pauseMenu.SetActive(false);
+    }
+
+    //Sahneler arasý geçiþ için yazýldý
+    public void LoadScene(string loadScene)
+    {
+        SceneManager.LoadScene(loadScene);
+    }
+
+    
 
 }

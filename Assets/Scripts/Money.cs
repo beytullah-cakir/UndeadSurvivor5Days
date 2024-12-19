@@ -21,7 +21,7 @@ public class Money : MonoBehaviour
         if (Vector3.Distance(transform.position, _player.position) < 0.1f)
         {
             Destroy(gameObject);
-            GameManager.instance.money++;
+            GameManager.instance.ManageMoney(1);
         }
     }
 }

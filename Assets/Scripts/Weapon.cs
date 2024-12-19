@@ -12,15 +12,14 @@ public class Weapon : MonoBehaviour
 {
 
     public bool isReload;
-    public float
-        reloadTime,
-        magazineCount,
-        currentBulletCount,
-        upgradeMagazine;
+    public float damage;
+    public int magazineCount, upgradeMagazine;
+    public float reloadTime, currentBulletCount;
     public Image reloadCircle;
-    public GameObject bullet;
     private Transform firePoint;
+    public float weaponCost;
     public static Weapon instance;
+
     private GameManager _gameManager;
 
     private void Awake()
@@ -51,10 +50,18 @@ public class Weapon : MonoBehaviour
 
     public void Fire()
     {
-        GameObject _bullet=Instantiate(bullet,firePoint.position,firePoint.rotation);
-        _bullet.GetComponent<Bullet>().SetTargetPosition(Character.instance.MousePosition());
-        currentBulletCount--;
+        GameObject _bullet = ObjectPool.instance.GetBullet();
+        if (_bullet != null)
+        {
+            _bullet.transform.position = firePoint.position;
+            _bullet.transform.rotation = firePoint.rotation;
+            _bullet.SetActive(true);
+            _bullet.GetComponent<Bullet>().SetTargetPosition(Character.instance.MousePosition());
+            currentBulletCount--;
+        }
+       
     }
+
 
 
 
@@ -79,7 +86,7 @@ public class Weapon : MonoBehaviour
         else
         {
             currentBulletCount = _gameManager.totalBullet;
-            _gameManager.totalBullet = 0f;
+            _gameManager.totalBullet = 0;
         }
        
         

@@ -13,4 +13,9 @@ public class SceneControl : MonoBehaviour
     {
         SceneManager.LoadScene(upgrade_scene_index);
     }
+
+    public void LoadScene(int scene_index)
+    {
+        SceneManager.LoadScene(scene_index);
+    }
 }

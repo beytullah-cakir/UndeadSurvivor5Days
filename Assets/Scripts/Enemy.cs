@@ -2,13 +2,13 @@ using System.Collections;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
+
 
 public class Enemy : Entity
 {
 
     private Transform player;
-    public float moveDistance, attackDistance;
+    public float attackDistance;
     public Vector3 offset;
     private float distanceToPlayer;
 
@@ -42,8 +42,7 @@ public class Enemy : Entity
     {
         health = maxHealth;
         currentHealthbar = transform.GetChild(0).GetComponent<HealthBar>();
-        currentHealthbar.SetHealth(health);
-        
+        currentHealthbar.SetHealth(maxHealth);
     }
 
 
@@ -54,8 +53,9 @@ public class Enemy : Entity
         if (health <= 0)
         {
             DownItems();
-            Destroy(gameObject);
-            //Born();
+            Born();
+            GameManager.instance.RespawnZombie(gameObject);
+            
         }
     }
 
@@ -66,7 +66,7 @@ public class Enemy : Entity
         Instantiate(items.money, transform.position, Quaternion.identity);
         int isDown = Random.Range(0, 2);
         if (isDown > 0)
-            Instantiate(items.RandomItems(), transform.position, transform.rotation);
+            Instantiate(items.RandomItems(), transform.position, Quaternion.identity);
 
     }
 
@@ -106,7 +106,6 @@ public class Enemy : Entity
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, moveDistance);
         Gizmos.DrawWireSphere(transform.position, attackDistance);
     }
 
@@ -115,10 +114,8 @@ public class Enemy : Entity
     {
         if (other.CompareTag("Bullet"))
         {
-            TakeDamage(Character.instance.damage);
+            TakeDamage(Weapon.instance.damage);
             anm.SetTrigger("Hit");
-            CameraShake.instance.StartShake(1,0.1f);
-            
         }
     }
    

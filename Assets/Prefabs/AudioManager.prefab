@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5439047297351198759
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3680919788055285056}
+  - component: {fileID: 7877715750188130977}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3680919788055285056
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5439047297351198759}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.5511651, y: -7.9658175, z: -0.09958909}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7877715750188130977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5439047297351198759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d591e6bcb97084e40acb578af43d10f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 1173864487931494107, guid: e8f25b243b460a745838ed3be1fb588d, type: 3}
+  enemyHit: {fileID: 6558281460514373798, guid: 9f684c09a19f7fe498266f8fd1e22d47, type: 3}
+  playerHit: {fileID: 4554143882601913358, guid: d659e87fec58d7b4d84fc499fa307bad, type: 3}
+  gameWin: {fileID: 2479368811161548538, guid: d63bc605f7d9912438502e81cee79d9f, type: 3}
+  gameLose: {fileID: 3096716508799611128, guid: 8a8821c983b34a7489cc611e06e48caa, type: 3}
+  meleeCombat: {fileID: 5946765586703301495, guid: fb24672c9e89e4a4495ef145f07a0405, type: 3}
+  background: {fileID: 789215199095968618, guid: 004ed7b9b50ad174e87f4964971d7c94, type: 3}

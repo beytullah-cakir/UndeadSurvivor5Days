@@ -23,7 +23,7 @@ public class LoadingScreen : MonoBehaviour
     private IEnumerator LoadSceneAsync(int index)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(index);
-
+        Time.timeScale = 1;
         while (!operation.isDone)
         {
             float progress = Mathf.Clamp01(operation.progress / 0.9f);

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public abstract class Entity: MonoBehaviour
 {
@@ -14,7 +13,7 @@ public abstract class Entity: MonoBehaviour
     protected Rigidbody2D rb;
     protected Animator anm;
     public float attackInterval = 5f;
-    protected bool isDead;
+    public bool isDead;
     protected HealthBar currentHealthbar;
     protected float nextAttackTime = 0;
     public float damage;
@@ -25,7 +24,7 @@ public abstract class Entity: MonoBehaviour
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        maxHealth = health;
+        health = maxHealth;
         anm= GetComponent<Animator>();
         
     }

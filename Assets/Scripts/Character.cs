@@ -9,10 +9,7 @@ public class Character : Entity
     private Transform aimTransform;
     private SpriteRenderer spriteRenderer;
     private SpriteRenderer weaponSpriteRenderer;
-    
     private Vector2 movement;
-    private bool isFiring;
-
     public float upgradeHealth;
 
 
@@ -110,7 +107,8 @@ public class Character : Entity
     private void CheckDeath()
     {
         if (health > 0 || isDead) return;
-        Application.Quit();
+        AudioManager.instance.GameLoseSound();
+        Time.timeScale = 0;
         isDead = true;
     }
 
