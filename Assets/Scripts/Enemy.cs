@@ -1,6 +1,3 @@
-using System.Collections;
-using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -11,7 +8,7 @@ public class Enemy : Entity
     public float attackDistance;
     public Vector3 offset;
     private float distanceToPlayer;
-
+    SecondaryWeapon secondaryWeapon;
 
 
     void Update()
@@ -23,8 +20,7 @@ public class Enemy : Entity
             Attack();
         else
             MoveTowardsPlayer();
-
-        PowerUp();
+        
         Death();
         currentHealthbar.healthSlider.transform.position = Camera.main.WorldToScreenPoint(transform.position + offset);
     }
@@ -33,6 +29,7 @@ public class Enemy : Entity
     protected override void Start()
     {
         base.Start();
+        secondaryWeapon = new SecondaryWeapon();
         Born();
         player = GameObject.FindWithTag("Player").transform;
     }
@@ -93,15 +90,6 @@ public class Enemy : Entity
         return transform.position.x - player.position.x > 0 ? new Vector2(-1, 1) : new Vector2(1, 1);
     }
 
-    public void PowerUp()
-    {
-        if (GameManager.instance.currentTime >= 18)
-        {
-            speed = upgradeSpeed;
-            damage = upgradeDamage;
-        }
-    }
-
 
     private void OnDrawGizmos()
     {
@@ -112,11 +100,22 @@ public class Enemy : Entity
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Bullet"))
+        switch (other.gameObject.tag)
         {
-            TakeDamage(Weapon.instance.damage);
-            anm.SetTrigger("Hit");
+            
+            case "Bullet":
+                TakeDamage(Weapon.instance.damage);
+                break;
+
+            case "SecondaryWeapon":
+                TakeDamage(secondaryWeapon.damage);
+                break;
+
         }
+
+
+        
+        
     }
    
 

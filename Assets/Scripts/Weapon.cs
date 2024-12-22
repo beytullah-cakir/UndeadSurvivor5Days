@@ -1,18 +1,12 @@
-using NUnit.Framework;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Diagnostics;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class Weapon : MonoBehaviour
 {
 
     public bool isReload;
-    public float damage;
+    public int damage;
     public int magazineCount, upgradeMagazine;
     public float reloadTime, currentBulletCount;
     public Image reloadCircle;

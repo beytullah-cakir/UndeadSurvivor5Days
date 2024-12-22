@@ -1,4 +1,3 @@
-using System.Data.SqlTypes;
 using UnityEngine;
 
 public class Character : Entity

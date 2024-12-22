@@ -1,67 +1,67 @@
-using NUnit.Framework;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class Shop : MonoBehaviour
 {
-    public float increaseDamage = 10;
+    public int increaseDamage = 10;
+    public int moneyIncrase = 150;
     public TextMeshProUGUI money;
-    public Cards[] cards;
     Weapon weapon;
+    SecondaryWeapon secondaryWeapon;
+    public TextMeshProUGUI weaponUpgrade, itemUpgrade, weaponDamage, itemDamage,itemBuy;
+    public int upgradeWeaponMoney, upgradeItemMoney, buyItemMoney;
 
 
     private void Awake()
     {
         weapon = new Weapon();
+        secondaryWeapon = new SecondaryWeapon();
     }
 
     void Start()
     {
-        foreach (var card in cards)
-        {
-            card.damage=weapon.damage;
-            card.buy.onClick.AddListener(() =>BuyItem(card));
-            card.upgrade.onClick.AddListener(() => UpgradeWeapon(card));
-        }
     }
 
 
     void Update()
     {
-        money.text = "$"+$"{PlayerPrefs.GetInt("MONEY").ToString()}";
+        money.text = "$" + $"{PlayerPrefs.GetInt("MONEY")}";
+
+        weaponDamage.text = $"Damage: {weapon.damage}";
+        weaponUpgrade.text = $"Upgrade ${upgradeWeaponMoney}";
+
+        itemUpgrade.text = $"Upgrade ${upgradeItemMoney}";
+        itemDamage.text = $"Damage: {secondaryWeapon.damage}";
+        itemBuy.text = $"{buyItemMoney}";
+
     }
 
 
-    public void UpgradeWeapon(Cards card)
+    public void UpgradeWeapon()
     {
-        card.damage += increaseDamage;
-        Weapon.instance.damage += card.damage;
-        
+        weapon.damage += increaseDamage;
+        PlayerPrefs.SetInt("WEAPONDAMAGE", weapon.damage);
+        upgradeWeaponMoney += moneyIncrase;
+        PlayerPrefs.SetInt("UPGRADEWEAPONMONEY", upgradeWeaponMoney);
     }
 
-    public void BuyItem(Cards card)
+    public void UpgradeItem()
     {
-        if (GameManager.instance.money >= card.cost)
-        {
-            GameManager.instance.ManageMoney(-card.cost);
-            card.buy.gameObject.SetActive(false);
-            card.upgrade.gameObject.SetActive(true);
-        }
+        secondaryWeapon.damage += increaseDamage;
+        PlayerPrefs.SetInt("SECONDARYWEAPONDAMAGE", secondaryWeapon.damage);
+        upgradeItemMoney += moneyIncrase;
+        PlayerPrefs.SetInt("UPGRADEITEMMONEY", upgradeItemMoney);
+    }
+
+    public void BuyItem()
+    {
+        if (GameManager.instance.money >= buyItemMoney)
+            GameManager.instance.ManageMoney(-buyItemMoney);
         else
         {
             Debug.Log("Yeterli paranýz yok!");
         }
     }
 }
-[System.Serializable]
-public class Cards
-{
-    public string name;
-    public Button buy;
-    public Button upgrade;
-    public float damage;
-    public int cost;
 
-}

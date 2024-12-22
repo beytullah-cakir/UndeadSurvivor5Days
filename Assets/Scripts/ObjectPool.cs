@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,13 +32,14 @@ public class ObjectPool : MonoBehaviour
     }
     public GameObject GetBullet()
     {
-        foreach (GameObject bullet in bullets)
+        for (int i = 0; i < bullets.Count; i++)
         {
-            if (!bullet.activeInHierarchy)
+            if (bullets[i] != null && !bullets[i].activeInHierarchy)
             {
-                return bullet;
+                return bullets[i];
             }
         }
         return null;
     }
+
 }

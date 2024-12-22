@@ -1,11 +1,6 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -121,11 +116,7 @@ public class GameManager : MonoBehaviour
         UIManager.instance.pauseMenu.SetActive(false);
     }
 
-    //Sahneler arasý geçiþ için yazýldý
-    public void LoadScene(string loadScene)
-    {
-        SceneManager.LoadScene(loadScene);
-    }
+    
 
     
 
