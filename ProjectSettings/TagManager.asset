@@ -12,6 +12,7 @@ TagManager:
   - Money
   - PowerUp
   - Walls
+  - SecondaryWeapon
   layers:
   - Default
   - TransparentFX

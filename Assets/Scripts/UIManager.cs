@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public TextMeshProUGUI currentBulletTxt,totalBulletTxt,timerTxt,totalMoneyTxt;
+    public TextMeshProUGUI currentBulletTxt,totalBulletTxt,timerTxt,totalMoneyTxt,dayTxt;
     public TextMeshProUGUI finish_text;
-    public GameObject finishMenu,pauseMenu;
+    public GameObject youWinMenu,pauseMenu,youLoseMenu;
+    
 
     public static UIManager instance;
     private void Awake()
@@ -18,17 +19,10 @@ public class UIManager : MonoBehaviour
         currentBulletTxt.text = $"{Weapon.instance.currentBulletCount} / {Weapon.instance.magazineCount}";
         totalBulletTxt.text = GameManager.instance.totalBullet.ToString();
         timerTxt.text= $"{Mathf.Ceil(GameManager.instance.currentTime)}";
-        totalMoneyTxt.text = $"{GameManager.instance.money}";
+        totalMoneyTxt.text = $"{GameManager.money}";
 
-        finish_text.text = GameManager.instance.gameOver ? "YOU WIN" : "YOU LOSE";
-        ActiveFinishMenu();
+        finish_text.text = GameManager.gameOver ? "YOU WIN" : "YOU LOSE";
+        dayTxt.text = $"DAY {GameManager.days}";
+       
     }
-
-
-    public void ActiveFinishMenu()
-    {
-        if(Character.instance.isDead)
-            finishMenu.SetActive(true);
-    }
-
 }

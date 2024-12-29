@@ -7,16 +7,16 @@ public class Shop : MonoBehaviour
     public int increaseDamage = 10;
     public int moneyIncrase = 150;
     public TextMeshProUGUI money;
-    Weapon weapon;
-    SecondaryWeapon secondaryWeapon;
+    GameManager gameManager;
     public TextMeshProUGUI weaponUpgrade, itemUpgrade, weaponDamage, itemDamage,itemBuy;
-    public int upgradeWeaponMoney, upgradeItemMoney, buyItemMoney;
+    public static int upgradeWeaponMoney=160, upgradeItemMoney=160, buyItemMoney=100;
+    public static bool isBuyedItem;
+    
 
 
     private void Awake()
     {
-        weapon = new Weapon();
-        secondaryWeapon = new SecondaryWeapon();
+        gameManager = new GameManager();
     }
 
     void Start()
@@ -26,38 +26,57 @@ public class Shop : MonoBehaviour
 
     void Update()
     {
-        money.text = "$" + $"{PlayerPrefs.GetInt("MONEY")}";
-
-        weaponDamage.text = $"Damage: {weapon.damage}";
+        
+        //money.text = "$" + $"{GameManager.instance.money}";
+        weaponDamage.text = $"Damage: {Weapon.damage}";
         weaponUpgrade.text = $"Upgrade ${upgradeWeaponMoney}";
 
         itemUpgrade.text = $"Upgrade ${upgradeItemMoney}";
-        itemDamage.text = $"Damage: {secondaryWeapon.damage}";
+        itemDamage.text = $"Damage: {SecondaryWeapon.damage}";
         itemBuy.text = $"{buyItemMoney}";
+        money.text = "$" + $"{GameManager.money}";
 
     }
 
 
     public void UpgradeWeapon()
     {
-        weapon.damage += increaseDamage;
-        PlayerPrefs.SetInt("WEAPONDAMAGE", weapon.damage);
-        upgradeWeaponMoney += moneyIncrase;
-        PlayerPrefs.SetInt("UPGRADEWEAPONMONEY", upgradeWeaponMoney);
+        if (GameManager.money >= upgradeWeaponMoney)
+        {
+            Weapon.damage += increaseDamage;
+            gameManager.ManageMoney(-upgradeWeaponMoney);
+            PlayerPrefs.SetInt("WEAPONDAMAGE", Weapon.damage);
+            upgradeWeaponMoney += moneyIncrase;
+            PlayerPrefs.SetInt("UPGRADEWEAPONMONEY", upgradeWeaponMoney);
+        }
+        else print("not");
+        
+        
     }
 
     public void UpgradeItem()
     {
-        secondaryWeapon.damage += increaseDamage;
-        PlayerPrefs.SetInt("SECONDARYWEAPONDAMAGE", secondaryWeapon.damage);
-        upgradeItemMoney += moneyIncrase;
-        PlayerPrefs.SetInt("UPGRADEITEMMONEY", upgradeItemMoney);
+        if (GameManager.money >= upgradeItemMoney)
+        {
+            SecondaryWeapon.damage += increaseDamage;
+            gameManager.ManageMoney(-upgradeItemMoney);
+            PlayerPrefs.SetInt("SECONDARYWEAPONDAMAGE", SecondaryWeapon.damage);
+            upgradeItemMoney += moneyIncrase;
+            PlayerPrefs.SetInt("UPGRADEITEMMONEY", upgradeItemMoney);
+        }
+        else print("not");
+
+
     }
 
     public void BuyItem()
     {
-        if (GameManager.instance.money >= buyItemMoney)
-            GameManager.instance.ManageMoney(-buyItemMoney);
+        if (GameManager.money >= buyItemMoney)
+        {
+            gameManager.ManageMoney(-buyItemMoney);
+            isBuyedItem = true;
+        }
+            
         else
         {
             Debug.Log("Yeterli paranýz yok!");

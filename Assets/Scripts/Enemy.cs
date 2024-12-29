@@ -49,6 +49,8 @@ public class Enemy : Entity
     {
         if (health <= 0)
         {
+
+            AudioManager.instance.EnemyHitSound();
             DownItems();
             Born();
             GameManager.instance.RespawnZombie(gameObject);
@@ -61,10 +63,12 @@ public class Enemy : Entity
     {
         ItemManager items = ItemManager.instance;
         Instantiate(items.money, transform.position, Quaternion.identity);
+        
         int isDown = Random.Range(0, 2);
         if (isDown > 0)
+        {
             Instantiate(items.RandomItems(), transform.position, Quaternion.identity);
-
+        }
     }
 
 
@@ -73,6 +77,7 @@ public class Enemy : Entity
         if (Time.time >= nextAttackTime)
         {
             Character.instance.TakeDamage(damage);
+            AudioManager.instance.PlayerHitSound();
             nextAttackTime = Time.time + attackInterval;
         }
 
@@ -104,19 +109,19 @@ public class Enemy : Entity
         {
             
             case "Bullet":
-                TakeDamage(Weapon.instance.damage);
+                TakeDamage(Weapon.damage);
                 break;
 
             case "SecondaryWeapon":
-                TakeDamage(secondaryWeapon.damage);
+                TakeDamage(SecondaryWeapon.damage);
                 break;
 
         }
 
-
-        
-        
     }
-   
+    
+
+
+    
 
 }

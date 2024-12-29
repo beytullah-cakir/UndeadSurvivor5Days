@@ -6,7 +6,7 @@ public class Weapon : MonoBehaviour
 {
 
     public bool isReload;
-    public int damage;
+    public static int damage=10;
     public int magazineCount, upgradeMagazine;
     public float reloadTime, currentBulletCount;
     public Image reloadCircle;
@@ -52,6 +52,7 @@ public class Weapon : MonoBehaviour
             _bullet.SetActive(true);
             _bullet.GetComponent<Bullet>().SetTargetPosition(Character.instance.MousePosition());
             currentBulletCount--;
+            AudioManager.instance.WeaponSound();
         }
        
     }

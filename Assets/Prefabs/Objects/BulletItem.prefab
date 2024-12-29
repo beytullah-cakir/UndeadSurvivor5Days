@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6490025963668851030}
   - component: {fileID: 7133119904061919789}
-  - component: {fileID: 6212884265889536792}
   - component: {fileID: 2318013546538901834}
   m_Layer: 0
   m_Name: BulletItem
@@ -89,28 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &6212884265889536792
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8399563052232558500}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 186700db1fc2c974daca8cc546cc73f9, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!61 &2318013546538901834
 BoxCollider2D:
   m_ObjectHideFlags: 0

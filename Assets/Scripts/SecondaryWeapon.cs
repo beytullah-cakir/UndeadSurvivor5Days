@@ -3,7 +3,7 @@ using UnityEngine;
 public class SecondaryWeapon : MonoBehaviour
 {
     public float speed = 5f;
-    public int damage = 10;
+    public static int damage = 10;
 
 
     public static SecondaryWeapon instance;
@@ -13,6 +13,6 @@ public class SecondaryWeapon : MonoBehaviour
     }
     void Update()
     {
-        transform.Rotate(Vector3.up * speed * Time.deltaTime);
+        transform.Rotate(Vector3.forward * speed * Time.deltaTime);
     }
 }

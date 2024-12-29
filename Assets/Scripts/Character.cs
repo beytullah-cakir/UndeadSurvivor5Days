@@ -39,6 +39,7 @@ public class Character : Entity
         FlipCharacter();
         HandleFiring();
         CheckDeath();
+        ActiveItem();
         currentHealthbar.UpdateHealthBar(health);
     }
 
@@ -97,12 +98,6 @@ public class Character : Entity
         }
     }
 
-    public void PowerUp()
-    {
-        speed = upgradeSpeed;
-        damage = upgradeDamage;
-    }
-
     private void CheckDeath()
     {
         if (health > 0 || isDead) return;
@@ -123,13 +118,15 @@ public class Character : Entity
                 health += upgradeHealth;
             }
         }
-
-        if (other.CompareTag("PowerUp"))
-            PowerUp();
         
         Destroy(other.gameObject);
     }
 
+
+    public void ActiveItem()
+    {
+        if(Shop.isBuyedItem) transform.GetChild(1).gameObject.SetActive(true);
+    }
 
 
 }

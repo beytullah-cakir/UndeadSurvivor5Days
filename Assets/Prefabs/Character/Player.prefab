@@ -33,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 5448345489037612093}
   m_Father: {fileID: 7480968733884693795}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 327.27786}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &864752934848714488
 Animator:
   serializedVersion: 7
@@ -68,8 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c3f8eab37d80864dac14c006cd9a2cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  damage: 10
+  speed: 60
 --- !u!1 &1839262427761168176
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,7 +81,7 @@ GameObject:
   - component: {fileID: 2622792122981402873}
   m_Layer: 0
   m_Name: Spade
-  m_TagString: Untagged
+  m_TagString: SecondaryWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
