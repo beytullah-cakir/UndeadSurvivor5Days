@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        CreateZombies();
+        Invoke(nameof(CreateZombies), 3f);
         Time.timeScale = 1;
         currentTime = countDownTime;
     }
@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
             currentTime = 0;
             gameOver = true;
             Time.timeScale = 0;
-            UIManager.instance.youWinMenu.SetActive(true); // Kazanma menüsünü aç
+            UIManager.instance.youWinMenu.SetActive(true); // Kazanma menï¿½sï¿½nï¿½ aï¿½
         }
     }
 

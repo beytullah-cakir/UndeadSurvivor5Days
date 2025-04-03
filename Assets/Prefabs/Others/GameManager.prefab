@@ -45,13 +45,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zombieCountPerLevel: 10
-  zombie: {fileID: 1779558106857612187, guid: cb3591df5ddd137458af238b012cb54f, type: 3}
   zombieParent: {fileID: 0}
-  globalLight: {fileID: 0}
-  gameStartHour: 12
-  gameEndHour: 24
-  gameDurationInSeconds: 300
-  hours: 0
-  minutes: 0
+  totalBullet: 300
+  upgradeTotalBullet: 30
+  zombies:
+  - {fileID: 1779558106857612187, guid: cb3591df5ddd137458af238b012cb54f, type: 3}
+  - {fileID: 2237966227692548433, guid: 960d08f1111624f4fb118c31629fb2d8, type: 3}
+  - {fileID: 1779558106857612187, guid: b450b58c63156814ca4b50f34f110f29, type: 3}
+  - {fileID: 1779558106857612187, guid: 7a898e9d5ffcb1c4ebd35d8382491cb6, type: 3}
+  - {fileID: 1779558106857612187, guid: 78cf2ac69699c3248a0a72d921e0a49e, type: 3}
+  countDownTime: 180
   currentTime: 0
-  money: 0
+  playSound: 0
